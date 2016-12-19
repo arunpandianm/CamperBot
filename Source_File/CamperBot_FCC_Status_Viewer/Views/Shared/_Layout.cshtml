@@ -1,0 +1,377 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keyword" content="camperbot, fcc, freecodecamp, status viewer">
+    <meta name="description" content="This is an status viewer for freecodecamp and used to track campers">
+    <meta name="author" content="arunpandian, bhargav, madhan, indhumathi">
+    
+    <title>CamperBot-FCC Status Viewer</title>
+    @* <title>@ViewBag.Title</title>*@
+    <!-- Bootstrap -->
+    <link href="~/Resource/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="~/Resource/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="~/Resource/nprogress/nprogress.css" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="~/Resource/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="~/Custom/css/custom.min.css" rel="stylesheet">
+</head>
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        @*
+                        @Html.ActionLink("CamperBot", "Index", "General", new { area = "" }, new { @class = "site_title fa fa-trophy" })</li>
+                        *@
+                       <a href="#" class="site_title"><i class="fa fa-trophy"></i> <span>CamperBot</span></a>
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            <img src="~/Images/profile.jpg" alt="profile picture" class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2>Arun</h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+                    <br />
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a><i class="fa fa-home"></i> General <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <!--
+                                        <li>@Html.ActionLink("Dashboard", "Index", "General", new { area = "" }, new { @class = "fa fa-area-chart" })</li>
+                                        -->
+                                        <li><a href="../General/Dashboard"><i class="fa fa-area-chart"></i> Dashboard </a></li>
+                                        <li><a href="../General/UserRankViewer"><i class="fa fa-list-ol"></i> User Rank Viewer </a></li>
+                                        <li><a href="../General/UserProfileViewer"><i class="fa fa-life-ring"></i> User Profile Viewer </a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-history"></i> History <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="../History/MonthlyWiseHistory"><i class="fa fa-bar-chart"></i> Monthly Wise </a></li>
+                                        <li><a href="../History/YearlyWiseHistory"><i class="fa fa-bar-chart-o"></i> Yearly Wise </a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-wrench"></i> Settings <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="../Settings/UserExcluder"><i class="fa fa-users"></i> User Excluder </a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-globe"></i> Live On <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="../LiveOn/LiveUpdate"><i class="fa fa-newspaper-o"></i> Live Update</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-external-link"></i> Useful Link <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="#" target="_blank"><i class="fa fa-wechat"></i> Gitter Chat Room</a></li>
+                                        <li><a href="#" target="_blank"><i class="fa fa-code"></i> Free Code Camp</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-info"></i> About <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <!--
+                                        <li><i class="fa fa-code"></i> @Html.ActionLink("Developer Team", "DeveloperTeam", "About")</li>
+                                            -->
+                                        <li><a href="../About/DeveloperTeam"><i class="fa fa-code"></i>Developer Team</a></li>
+                                        <li><a href="../About/FccStatusViewer"><i class="fa fa-info-circle"></i>FCC Status Viewer</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                        <a data-toggle="tooltip" data-placement="top" title="Settings">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Lock">
+                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" href="login.html" data-placement="top" title="Logout">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="~/Images/profile.jpg" alt="This is the Profile Picture">Arun
+                                    <span class="fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li><a href="javascript:;"> Profile</a></li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <span class="badge bg-red pull-right">50%</span>
+                                            <span>Settings</span>
+                                        </a>
+                                    </li>
+                                    <li><a href="javascript:;">Help</a></li>
+                                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+
+            @RenderBody()
+            
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    © @DateTime.Now.Year CamperBot-FCC Status Viewer <a href="https://www.kgisl.ac.in">KGiSL</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+         </div>
+    </div>
+                    <!-- jQuery -->
+                    <script src="~/Resource/jquery/dist/jquery.min.js"></script>
+                    <!-- Bootstrap -->
+                    <script src="~/Resource/bootstrap/dist/js/bootstrap.min.js"></script>
+                    <!-- FastClick -->
+                    <script src="~/Resource/fastclick/lib/fastclick.js"></script>
+                    <!-- NProgress -->
+                    <script src="~/Resource/nprogress/nprogress.js"></script>
+                    <!-- Chart.js -->
+                    <script src="~/Resource/Chart.js/dist/Chart.min.js"></script>
+                    <!-- jQuery Sparklines -->
+                    <script src="~/Resource/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+                    <!-- Flot -->
+                    <script src="~/Resource/Flot/jquery.flot.js"></script>
+                    <script src="~/Resource/Flot/jquery.flot.pie.js"></script>
+                    <script src="~/Resource/Flot/jquery.flot.time.js"></script>
+                    <script src="~/Resource/Flot/jquery.flot.stack.js"></script>
+                    <script src="~/Resource/Flot/jquery.flot.resize.js"></script>
+                    <!-- Flot plugins -->
+                    <script src="~/Resource/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+                    <script src="~/Resource/flot-spline/js/jquery.flot.spline.min.js"></script>
+                    <script src="~/Resource/flot.curvedlines/curvedLines.js"></script>
+                    <!-- DateJS -->
+                    <script src="~/Resource/DateJS/build/date.js"></script>
+                    <!-- bootstrap-daterangepicker -->
+                    <script src="~/Resource/moment/min/moment.min.js"></script>
+                    <script src="~/Resource/bootstrap-daterangepicker/daterangepicker.js"></script>
+                    <!-- Custom Theme Scripts -->
+                    <script src="~/Custom/js/custom.min.js"></script>    
+    <!-- Flot -->
+    <script>
+      $(document).ready(function() {
+        //define chart clolors ( you maybe add more colors if you want or flot will add it automatic )
+        var chartColours = ['#96CA59', '#3F97EB', '#72c380', '#6f7a8a', '#f7cb38', '#5a8022', '#2c7282'];
+
+        //generate random number for charts
+        randNum = function() {
+          return (Math.floor(Math.random() * (1 + 40 - 20))) + 20;
+        };
+
+        var d1 = [];
+        //var d2 = [];
+
+        //here we generate data for chart
+        for (var i = 0; i < 30; i++) {
+          d1.push([new Date(Date.today().add(i).days()).getTime(), randNum() + i + i + 10]);
+          //    d2.push([new Date(Date.today().add(i).days()).getTime(), randNum()]);
+        }
+
+        var chartMinDate = d1[0][0]; //first day
+        var chartMaxDate = d1[20][0]; //last day
+
+        var tickSize = [1, "day"];
+        var tformat = "%d/%m/%y";
+
+        //graph options
+        var options = {
+          grid: {
+            show: true,
+            aboveData: true,
+            color: "#3f3f3f",
+            labelMargin: 10,
+            axisMargin: 0,
+            borderWidth: 0,
+            borderColor: null,
+            minBorderMargin: 5,
+            clickable: true,
+            hoverable: true,
+            autoHighlight: true,
+            mouseActiveRadius: 100
+          },
+          series: {
+            lines: {
+              show: true,
+              fill: true,
+              lineWidth: 2,
+              steps: false
+            },
+            points: {
+              show: true,
+              radius: 4.5,
+              symbol: "circle",
+              lineWidth: 3.0
+            }
+          },
+          legend: {
+            position: "ne",
+            margin: [0, -25],
+            noColumns: 0,
+            labelBoxBorderColor: null,
+            labelFormatter: function(label, series) {
+              // just add some space to labes
+              return label + '&nbsp;&nbsp;';
+            },
+            width: 40,
+            height: 1
+          },
+          colors: chartColours,
+          shadowSize: 0,
+          tooltip: true, //activate tooltip
+          tooltipOpts: {
+            content: "%s: %y.0",
+            xDateFormat: "%d/%m",
+            shifts: {
+              x: -30,
+              y: -50
+            },
+            defaultTheme: false
+          },
+          yaxis: {
+            min: 0
+          },
+          xaxis: {
+            mode: "time",
+            minTickSize: tickSize,
+            timeformat: tformat,
+            min: chartMinDate,
+            max: chartMaxDate
+          }
+        };
+        var plot = $.plot($("#placeholder33x"), [{
+         // label: "Email Sent",
+          data: d1,
+          lines: {
+            //fillColor: "rgba(150, 202, 89, 0.12)"
+          }, //#96CA59 rgba(150, 202, 89, 0.42)
+          points: {
+            fillColor: "#fff"
+          }
+        }], options);
+      });
+    </script>
+    <!-- /Flot -->     
+
+    <!-- bootstrap-daterangepicker -->
+    <script type="text/javascript">
+      $(document).ready(function() {
+
+        var cb = function(start, end, label) {
+          console.log(start.toISOString(), end.toISOString(), label);
+          $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        };
+
+        var optionSet1 = {
+          startDate: moment().subtract(29, 'days'),
+          endDate: moment(),
+          minDate: '01/01/2012',
+          maxDate: '12/31/2015',
+          dateLimit: {
+            days: 60
+          },
+          showDropdowns: true,
+          showWeekNumbers: true,
+          timePicker: false,
+          timePickerIncrement: 1,
+          timePicker12Hour: true,
+          ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+          },
+          opens: 'left',
+          buttonClasses: ['btn btn-default'],
+          applyClass: 'btn-small btn-primary',
+          cancelClass: 'btn-small',
+          format: 'MM/DD/YYYY',
+          separator: ' to ',
+          locale: {
+            applyLabel: 'Submit',
+            cancelLabel: 'Clear',
+            fromLabel: 'From',
+            toLabel: 'To',
+            customRangeLabel: 'Custom',
+            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            firstDay: 1
+          }
+        };
+        $('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+        $('#reportrange').daterangepicker(optionSet1, cb);
+        $('#reportrange').on('show.daterangepicker', function() {
+          console.log("show event fired");
+        });
+        $('#reportrange').on('hide.daterangepicker', function() {
+          console.log("hide event fired");
+        });
+        $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+          console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
+        });
+        $('#reportrange').on('cancel.daterangepicker', function(ev, picker) {
+          console.log("cancel event fired");
+        });
+        $('#options1').click(function() {
+          $('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
+        });
+        $('#options2').click(function() {
+          $('#reportrange').data('daterangepicker').setOptions(optionSet2, cb);
+        });
+        $('#destroy').click(function() {
+          $('#reportrange').data('daterangepicker').remove();
+        });
+      });
+    </script>
+    <!-- /bootstrap-daterangepicker -->
+       
+</body>
+</html>
+
+
