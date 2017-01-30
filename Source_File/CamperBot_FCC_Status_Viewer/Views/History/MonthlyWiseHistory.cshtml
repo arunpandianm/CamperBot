@@ -1,10 +1,203 @@
-﻿@{
+﻿@model List<CamperBot_FCC_Status_Viewer.Models.monthly_update_list>
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!-- Monthly wise history -->
 <div class="right_col" role="main">
-    <div class="row">
-        <p>Monthy wise demo</p>
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>CamperBot History - Monthlywise </h3>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <!--point graph-->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Total Points <small>Monthly</small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="#">Settings 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <canvas id="monthlyPointChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--user count graph-->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Total User <small>Monthly</small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="#">Settings 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <canvas id="monthlyUserCountChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<!-- /Monthly wise history -->
 
+<!-- Chart.js -->
+<script src="~/Plugins/Chart.js/Chart.min.js"></script>
+
+<!-- jQuery Sparklines -->
+<script src="~/Plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
+
+<!-- Flot -->
+<script src="~/Plugins/Flot/jquery.flot.js"></script>
+<script src="~/Plugins/Flot/jquery.flot.pie.js"></script>
+<script src="~/Plugins/Flot/jquery.flot.time.js"></script>
+<script src="~/Plugins/Flot/jquery.flot.stack.js"></script>
+<script src="~/Plugins/Flot/jquery.flot.resize.js"></script>
+
+<!-- Flot plugins -->
+<script src="~/Plugins/flot.orderbars/jquery.flot.orderBars.js"></script>
+<script src="~/Plugins/flot-spline/jquery.flot.spline.min.js"></script>
+<script src="~/Plugins/flot.curvedlines/curvedLines.js"></script>
+
+<!-- DateJS -->
+<script src="~/Plugins/DateJS/date.js"></script>
+
+<!-- bootstrap-daterangepicker -->
+<script src="~/Plugins/moment/moment.min.js"></script>
+<script src="~/Plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+
+<!--start history - monthly status chart-->
+<script>
+    $(function () {
+        var date = [];
+        var point = [];
+        var user_count = [];
+
+        @foreach (var item in Model)
+                {
+                    @:date.push("@item.u_date");
+                                                    @:point.push("@item.pts_count");
+                                                    @:user_count.push("@item.u_count");
+                                                }
+
+        var formatted_date = [];
+        for (var i = 0; i < date.length; i++) {
+            formatted_date[i] = date[i].slice(0, 9);
+        }
+
+        //Create data and option object point
+        var data_obj_point = {
+            labels: formatted_date,
+            datasets: [
+            {
+                label: "Total Points",
+                backgroundColor: "rgba(38, 185, 154, 0.31)",
+                borderColor: "rgba(38, 185, 154, 0.7)",
+                pointBorderColor: "rgba(38, 185, 154, 0.7)",
+                pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointBorderWidth: 1,
+                data: point
+            }
+            ]
+        };
+
+        var option_obj_point = {
+            title: {
+                display: true,
+                text: 'Monthly - Camper Total Points'
+            },
+            //responsive: true,
+            legend: {
+                position: 'bottom'
+            }
+        };
+        //Get the reference to canvas in html document
+        var myChartId = $("#monthlyPointChart");
+        //Create the chart
+        var myChart = new Chart(myChartId, {
+            type: "line",
+            data: data_obj_point,
+            options: option_obj_point
+        });
+
+
+        //user count chart
+        //Create data and option object point
+        var data_obj_user = {
+            labels: formatted_date,
+            datasets: [
+            {
+                label: "Camper Count",
+                backgroundColor: "rgba(38, 185, 154, 0.31)",
+                borderColor: "rgba(38, 185, 154, 0.7)",
+                pointBorderColor: "rgba(38, 185, 154, 0.7)",
+                pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointBorderWidth: 1,
+                data: user_count
+            }
+            ]
+        };
+
+        var option_obj_user = {
+            title: {
+                display: true,
+                text: 'Monthly - Total Camper Count'
+            },
+            //responsive: true,
+            legend: {
+                position: 'bottom'
+            }
+        };
+        //Get the reference to canvas in html document
+        var myChartId = $("#monthlyUserCountChart");
+        //Create the chart
+        var myChart = new Chart(myChartId, {
+            type: "line",
+            data: data_obj_user,
+            options: option_obj_user
+        });
+    });
+</script>
+<!--end history - monthly status chart-->

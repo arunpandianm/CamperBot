@@ -1,9 +1,345 @@
-﻿@{
+﻿@model List<CamperBot_FCC_Status_Viewer.Models.database_list>
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@{
+    int index_excluded_user = 1;
+    int index_unexcluded_user = 1;
+}
+<!-- Datatables required css -->
+<link href="~/Plugins/datatables.net/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="~/Plugins/datatables.net/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="~/Plugins/datatables.net/datatables.net-fixedheader-bs/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="~/Plugins/datatables.net/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="~/Plugins/datatables.net/datatables.net-scroller-bs/scroller.bootstrap.min.css" rel="stylesheet">
+<!-- /Datatables required css -->
+
+<!-- User Excluder setting-->
 <div class="right_col" role="main">
-    <div class="row">
-        <p>user excluder demo</p>
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>CamperBot User Excluder</h3>
+            </div>
+        </div>
+        <!--Excluded User-->
+        <div class="clearfix"></div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Excluded User List<small>campers</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <table id="datatable-responsive-excluded-user" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>User ID</th>
+                                <th>User Name</th>
+                                <th>DOJ</th>
+                                <th>URL</th>
+                                <th>Excluder</th>
+                                <th>Excluded Date</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                <!--LINQ query for Excluded user-->
+                                var excluded_user_list = from user in Model
+                                                         where user.excluder == "Y"
+                                                         select user;
+                                foreach (var item in excluded_user_list)
+                                {
+                                    <tr>
+                                        <td>@index_excluded_user</td>
+                                        <td>@item.uid</td>
+                                        <td>@item.uname</td>
+                                        <td>@item.doj</td>
+                                        <td>@item.url</td>
+                                        <td>@item.excluder</td>
+                                        <td>@item.exc_date</td>
+                                    </tr>
+                                    index_excluded_user++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!--Settings-->
+                <div class="x_title">
+                    <h2>Remove From Excluder List<small>campers</small></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <form>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                            <div class="form-group center">
+                                <input type="text" id="selectedExcludedUser" class="form-control" list="ExcludedUserList" required="required" autofocus="autofocus" placeholder="Excluded User">
+                                <datalist id="ExcludedUserList">
+                                    @foreach (var item in excluded_user_list)
+                                    {
+                                        <option value="@item.uname">@item.uname</option>
+                                    }
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            <button type="button" class="btn btn-success" id="removeExclusion">Remove Exclusion</button>
+                        </div>
+                    </form>
+                </div>
+                <!--/Settings-->
+            </div>
+        </div>
+        <!--/Excluded User-->
+        <!--UnExcluded User-->
+        <div class="clearfix"></div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Unexcluded User List<small>campers</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <table id="datatable-responsive-unexcluded-user" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>User ID</th>
+                                <th>User Name</th>
+                                <th>DOJ</th>
+                                <th>URL</th>
+                                <th>Excluder</th>
+                                <th>Excluded Date</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                <!--LINQ query for Excluded user-->
+                                var unexcluded_user_list = from user in Model
+                                                           where user.excluder == "N"
+                                                           select user;
+                                foreach (var item in unexcluded_user_list)
+                                {
+                                    <tr>
+                                        <td>@index_unexcluded_user</td>
+                                        <td>@item.uid</td>
+                                        <td>@item.uname</td>
+                                        <td>@item.doj</td>
+                                        <td>@item.url</td>
+                                        <td>@item.excluder</td>
+                                        <td>@item.exc_date</td>
+                                    </tr>
+                                    index_unexcluded_user++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!--Settings-->
+                <div class="x_title">
+                    <h2>Add To Excluder List<small>campers</small></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <form>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                            <div class="form-group center">
+                                <input type="text" id="selectedunExcludedUser" class="form-control" list="unExcludedUserList" required="required" autofocus="autofocus" placeholder="Normal User">
+                                <datalist id="unExcludedUserList">
+                                    @foreach (var item in unexcluded_user_list)
+                                    {
+                                        <option value="@item.uname">@item.uname</option>
+                                    }
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            <button type="button" class="btn btn-success" id="addExclusion">Add Exclusion</button>
+                        </div>
+                    </form>
+                </div>
+                <!--/Settings-->
+            </div>
+        </div>
+        <!--/UnExcluded User-->
     </div>
 </div>
+<!-- User Excluder setting-->
+
+<!-- Datatables js-->
+<script src="~/Plugins/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/Plugins/datatables.net/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="~/Plugins/datatables.net/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/Plugins/datatables.net/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="~/Plugins/datatables.net/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="~/Plugins/datatables.net/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="~/Plugins/datatables.net/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="~/Plugins/datatables.net/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+<script src="~/Plugins/datatables.net/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="~/Plugins/datatables.net/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/Plugins/datatables.net/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="~/Plugins/datatables.net/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+<script src="~/Plugins/jszip/dist/jszip.min.js"></script>
+<script src="~/Plugins/pdfmake/build/pdfmake.min.js"></script>
+<script src="~/Plugins/pdfmake/build/vfs_fonts.js"></script>
+
+<!-- /Datatables js-->
+<script>
+    $(document).ready(function () {
+        var handleDataTableButtons = function () {
+            if ($(".datatable-buttons").length) {
+                $(".datatable-buttons").DataTable({
+                    dom: "Bfrtip",
+                    buttons: [
+                      {
+                          extend: "copy",
+                          className: "btn-sm"
+                      },
+                      {
+                          extend: "csv",
+                          className: "btn-sm"
+                      },
+                      {
+                          extend: "excel",
+                          className: "btn-sm"
+                      },
+                      {
+                          extend: "pdfHtml5",
+                          className: "btn-sm"
+                      },
+                      {
+                          extend: "print",
+                          className: "btn-sm"
+                      },
+                    ],
+                    responsive: true
+                });
+            }
+        };
+
+        TableManageButtons = function () {
+            "use strict";
+            return {
+                init: function () {
+                    handleDataTableButtons();
+                }
+            };
+        }();
+
+        $('#datatable').dataTable();
+
+        $('#datatable-keytable').DataTable({
+            keys: true
+        });
+
+        //Excluded User
+        if ($("#datatable-responsive-excluded-user").length) {
+            $('#datatable-responsive-excluded-user').DataTable({
+
+                dom: "lfrtip",
+                responsive: true,
+                keys: true
+            });
+        }
+
+        //unExcluded User
+        if ($("#datatable-responsive-unexcluded-user").length) {
+            $('#datatable-responsive-unexcluded-user').DataTable({
+
+                dom: "lfrtip",
+                responsive: true,
+                keys: true
+            });
+        }
+
+        $('#datatable-scroller').DataTable({
+            ajax: "js/datatables/json/scroller-demo.json",
+            deferRender: true,
+            scrollY: 380,
+            scrollCollapse: true,
+            scroller: true
+        });
+
+        $('#datatable-fixed-header').DataTable({
+            fixedHeader: true
+        });
+
+        var $datatable = $('#datatable-checkbox');
+
+        $datatable.dataTable({
+            'order': [[1, 'asc']],
+            'columnDefs': [
+              { orderable: false, targets: [0] }
+            ]
+        });
+        $datatable.on('draw.dt', function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_flat-green'
+            });
+        });
+
+        TableManageButtons.init();
+    });
+</script>
+<!-- /Datatables -->
+<!--get data from Form and sent to Model Script-->
+<!--Add to Exclusion list-->
+<script>
+    $(function () {
+        $('#addExclusion').click(function () {
+            var selectedName = $('#selectedunExcludedUser').val();
+            window.location.href = "AddUserExclusion?userName=" + selectedName;
+        });
+    });
+</script>
+<!--/Add to Exclusion list-->
+<!--Remove from Exclusion list-->
+<script>
+    $(function () {
+        $('#removeExclusion').click(function () {
+            var selectedName = $('#selectedExcludedUser').val();
+            window.location.href = "RemoveUserExclusion?userName=" + selectedName;
+        });
+    });
+</script>
+<!--/Remove from Exclusion list-->
+<!--/get data from Form and sent to Model Script-->

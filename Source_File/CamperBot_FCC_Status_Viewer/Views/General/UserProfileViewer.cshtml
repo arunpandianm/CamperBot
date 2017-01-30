@@ -1,9 +1,188 @@
-﻿@{
+﻿@model List<CamperBot_FCC_Status_Viewer.Models.user_profile_details>
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!-- User Profile Viewer -->
+<!-- Used to fetch and display details of particular user-->
 <div class="right_col" role="main">
-    <div class="row">
-        <p>User profile demo</p>
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>User Profile</h3>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Camper <small>Activity report</small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="#">Settings 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 profile_left">
+                                <div class="profile_img">
+                                    <div id="crop-avatar">
+                                        <!-- Current avatar -->
+                                        <img class="img-responsive avatar-view" src="@item.url" alt="Avatar" title="Change the avatar">
+                                    </div>
+                                </div>
+                                <h3>@item.uname</h3>
+                                <ul class="list-unstyled user_data">
+                                    <li>
+                                        <i class="fa fa-key user-profile-icon"></i> ID : @item.uid
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-calendar user-profile-icon"></i> Became Camper on @item.doj.ToString().Substring(0, 9)
+                                    </li>
+                                    <li class="m-top-xs">
+                                        <i class="fa fa-trophy user-profile-icon"></i>
+                                        <a href="http://www.freecodecamp.com/@item.uname.ToLower().Trim()" target="_blank">www.freecodecamp.com/@item.uname.ToLower().Trim()</a>
+                                    </li>
+                                    <li class="m-top-xs">
+                                        <i class="fa fa-github user-profile-icon"></i>
+                                        <a href="http://www.github.com/@item.uname.ToLower().Trim()" target="_blank">www.github.com/@item.uname.ToLower().Trim()</a>
+                                    </li>
+                                </ul>
+                                <a class="btn btn-success" id="backToLeaderboard"><i class="fa fa-chevron-left m-right-xs"></i> Back to LeaderBoard</a>
+                                <br />
+                            </div>
+                            break;
+                        }
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                            <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                    <li role="presentation" class="active">
+                                        <a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Current Month Activity</a>
+                                    </li>
+                                    <li role="presentation" class="">
+                                        <a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Monthlywise Activity</a>
+                                    </li>
+                                    <li role="presentation" class="">
+                                        <a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Yearlywise Activity</a>
+                                    </li>
+                                </ul>
+                                <div id="myTabContent" class="tab-content" style="width:100%; height:280px;">
+                                    <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+                                        <!-- start current_month_graph_bar activity -->
+                                        <div id="current_month_graph_bar" style="width:100%; height:280px;"></div>
+                                        <!-- end current_month_graph_bar activity -->
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade active" id="tab_content2" aria-labelledby="profile-tab">
+                                        <!-- start monthly_graph_bar activity -->
+                                        <div id="monthly_graph_bar" style="width:100%; height:280px;"></div>
+                                        <!-- end monthly_graph_bar activity -->
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade active" id="tab_content3" aria-labelledby="profile-tab">
+                                        <!-- start yearly_graph_bar activity -->
+                                        <div id="yearly_graph_bar" style="width:100%; height:280px;"></div>
+                                        <!-- end yearly_graph_bar activity -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<!-- /User Profile Viewer -->
+
+<script>
+    var myData = [];
+    @foreach (var item in Model)
+    {
+        @:myData.push({ Date: '@item.r_date.ToString().Substring(0, 9)', Points: @item.points});
+    }
+    //console.log(myData);
+    //current_month_graph_bar
+    $(function () {
+        Morris.Bar({
+            element: 'current_month_graph_bar',
+            data: myData,
+            xkey: 'Date',
+            hideHover: 'auto',
+            barColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
+            ykeys: ['Points', 'sorned'],
+            labels: ['Points', ':)'],
+            xLabelAngle: 60,
+            resize: true
+        });
+        $MENU_TOGGLE.on('click', function () {
+            $(window).resize();
+        });
+    });
+
+    //monthly_graph_bar
+    $(function () {
+        Morris.Bar({
+            element: 'monthly_graph_bar',
+            data: myData,
+            xkey: 'Date',
+            hideHover: 'auto',
+            barColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
+            ykeys: ['Points', 'sorned'],
+            labels: ['Points', ':)'],
+            xLabelAngle: 60,
+            resize: true
+        });
+        $MENU_TOGGLE.on('click', function () {
+            $(window).resize();
+        });
+    });
+
+    //yearly_graph_bar
+    $(function () {
+        Morris.Bar({
+            element: 'yearly_graph_bar',
+            data: myData,
+            xkey: 'Date',
+            hideHover: 'auto',
+            barColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
+            ykeys: ['Points', 'sorned'],
+            labels: ['Points', ':)'],
+            xLabelAngle: 60,
+            resize: true
+        });
+        $MENU_TOGGLE.on('click', function () {
+            $(window).resize();
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $('#backToLeaderboard').click(function () {
+            window.location.href = "UserRankViewer";
+        });
+    });
+</script>
+
+<!-- morris.js -->
+<script src="~/Plugins/raphael/raphael.min.js"></script>
+<script src="~/Plugins/morris.js/morris.min.js"></script>
+<!-- bootstrap-progressbar -->
+<script src="~/Plugins/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<!-- bootstrap-daterangepicker -->
+<script src="~/Plugins/moment/moment.min.js"></script>

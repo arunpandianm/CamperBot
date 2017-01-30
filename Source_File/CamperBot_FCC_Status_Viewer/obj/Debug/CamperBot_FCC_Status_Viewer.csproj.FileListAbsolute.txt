@@ -31,3 +31,12 @@ E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\Ca
 E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\CamperBot_FCC_Status_Viewer\obj\Debug\CamperBot_FCC_Status_Viewer.csprojResolveAssemblyReference.cache
 E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\CamperBot_FCC_Status_Viewer\obj\Debug\CamperBot_FCC_Status_Viewer.dll
 E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\CamperBot_FCC_Status_Viewer\obj\Debug\CamperBot_FCC_Status_Viewer.pdb
+E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\CamperBot_FCC_Status_Viewer\bin\MySql.Data.dll
+E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\CamperBot_FCC_Status_Viewer\bin\MySql.Data.Entity.EF5.dll
+E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\CamperBot_FCC_Status_Viewer\bin\MySql.Data.Entity.EF6.dll
+E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\CamperBot_FCC_Status_Viewer\bin\MySql.Fabric.Plugin.dll
+E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\CamperBot_FCC_Status_Viewer\bin\MySql.Web.dll
+E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\CamperBot_FCC_Status_Viewer\bin\MySql.Data.xml
+E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\CamperBot_FCC_Status_Viewer\bin\MySql.Data.Entity.EF5.xml
+E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\CamperBot_FCC_Status_Viewer\bin\MySql.Data.Entity.EF6.xml
+E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\CamperBot_FCC_Status_Viewer\bin\MySql.Web.xml

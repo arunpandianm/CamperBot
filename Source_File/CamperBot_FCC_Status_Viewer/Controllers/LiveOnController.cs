@@ -9,6 +9,7 @@ namespace CamperBot_FCC_Status_Viewer.Controllers
     public class LiveOnController : Controller
     {
         // GET: LiveOn/LiveUpdate
+        // Get the live status of the user
         public ActionResult LiveUpdate()
         {
             return View();
