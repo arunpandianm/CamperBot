@@ -14,11 +14,20 @@
         </div>
         <div class="clearfix"></div>
         <!--Display several points status-->
+
         <div class="row top_tiles">
             <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                     <div class="icon"><i class="fa fa-flag-checkered"></i></div>
-                    <div class="count green">15450</div>
+                    @{
+                        var row_count = Model.Count();
+                        var skip_count = row_count - 2;
+                        var today_total_point = Model.Skip(skip_count).Take(1);
+                        foreach (var item in today_total_point)
+                        {
+                            <div class="count green">@item.pts_count</div>
+                        }
+                    }
                     <h3>Total Challenge Solved</h3>
                     <p>Today</p>
                 </div>
@@ -26,7 +35,15 @@
             <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                     <div class="icon"><i class="fa fa-flag"></i></div>
-                    <div class="count">15350</div>
+                    @{
+
+                        var yesterday_total_point = Model.Skip(skip_count - 1).Take(1);
+                        foreach (var item in yesterday_total_point)
+                        {
+                            <div class="count">@item.pts_count</div>
+                        }
+                    }
+                    
                     <h3>Total Challenge Solved</h3>
                     <p>Yesterday</p>
                 </div>
@@ -34,22 +51,36 @@
             <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                     <div class="icon"><i class="fa fa-sort-amount-desc"></i></div>
-                    <div class="count green">345</div>
-                    <h3>Highest challenge Count</h3>
-                    <p>Individual</p>
+                    @{
+
+                        var current_user_count = Model.Skip(skip_count).Take(1);
+                        foreach (var item in current_user_count)
+                        {
+                            <div class="count green">@item.u_count</div>
+                        }
+                    }
+                    <h3>Current camper(user) Count</h3>
+                    <p>Total</p>
                 </div>
             </div>
             <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                     <div class="icon"><i class="fa fa-sort-amount-asc"></i></div>
-                    <div class="count red">1</div>
+                    @{
+
+                        var inactive_user = Model.Skip(skip_count + 1).Take(1);
+                        foreach (var item in inactive_user)
+                        {
+                            <div class="count red">@item.u_count</div>
+                        }
+                    }
+                    
                     <h3>Inactive Campers Count</h3>
                     <p>Total</p>
                 </div>
             </div>
         </div>
         <!--/Display several points status-->
-
         <!--Dashboard - Current Month Camper Total Point graph-->
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -81,28 +112,27 @@
             </div>
         </div>
         <!--/Dashboard - Current Month Camper Total Point graph-->
-
         <!-- Chart.js -->
         <script src="~/Plugins/Chart.js/Chart.min.js"></script>
-        
+
         <!-- jQuery Sparklines -->
         <script src="~/Plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
-        
+
         <!-- Flot -->
         <script src="~/Plugins/Flot/jquery.flot.js"></script>
         <script src="~/Plugins/Flot/jquery.flot.pie.js"></script>
         <script src="~/Plugins/Flot/jquery.flot.time.js"></script>
         <script src="~/Plugins/Flot/jquery.flot.stack.js"></script>
         <script src="~/Plugins/Flot/jquery.flot.resize.js"></script>
-        
+
         <!-- Flot plugins -->
         <script src="~/Plugins/flot.orderbars/jquery.flot.orderBars.js"></script>
         <script src="~/Plugins/flot-spline/jquery.flot.spline.min.js"></script>
         <script src="~/Plugins/flot.curvedlines/curvedLines.js"></script>
-        
+
         <!-- DateJS -->
         <script src="~/Plugins/DateJS/date.js"></script>
-        
+
         <!--Dashboard - current month status chart using chartJS plugin-->
         <script>
             $(function () {
@@ -113,17 +143,53 @@
 
                 @foreach (var item in Model)
                 {
+                    if(@item.u_date != "InactiveUser") { 
                     @:date.push("@item.u_date");
                     @:point.push("@item.pts_count");
-                }
-
-                for (var i = 0; i < date.length; i++) {
-                    formatted_date[i] = date[i].slice(0, 9);
+                    }
                 }
                 
+                //start -- date generation  
+                for (var i = 0; i < date.length; i++) {
+                    var date_obj1 = new Date(date[i]);
+                    formatted_date[i] = date_obj1.getDate() + "/" + (date_obj1.getMonth() + 1) + "/" + date_obj1.getFullYear();
+                }
+
+                var date_obj = new Date();
+                var graphDate = [];
+                for (var i = 0; i < date_obj.getDate(); i++) {
+                    var temp = i + 1;
+                    graphDate.push(temp + "/" + (date_obj.getMonth() + 1) + "/" + date_obj.getFullYear());
+                }
+
+                //console.log(formatted_date);
+                //console.log(graphDate);
+
+                var graphPoints = [];
+                var flag_first_entry = 1;
+                var temp_points = 0;
+                for (var i = 0; i < graphDate.length; i++) {
+                    for (var j = 0; j < formatted_date.length; j++) {
+                        if (graphDate[i] == formatted_date[j] && flag_first_entry == 1) {
+                            graphPoints[i] = point[j];
+                            temp_points = point[j];
+                            flag_first_entry = 2;
+                        }
+                        if (graphDate[i] == formatted_date[j] && flag_first_entry == 2) {
+                            graphPoints[i] = point[j];
+                            temp_points = point[j];
+                        }
+                        else if (flag_first_entry == 2) {
+                            graphPoints[i] = temp_points;
+                        }
+                    }
+                    
+                }
+                //end -- date generation
+
                 //Create data and option object
                 var data_obj = {
-                    labels: formatted_date,
+                    labels: graphDate,
                     datasets: [
                     {
                         label: "Current Month - Campers Total Points Status",
@@ -134,7 +200,7 @@
                         pointHoverBackgroundColor: "#fff",
                         pointHoverBorderColor: "rgba(220,220,220,1)",
                         pointBorderWidth: 1,
-                        data: point
+                        data: graphPoints
                     }
                     ]
                 };

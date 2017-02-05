@@ -117,6 +117,8 @@
     <Content Include="Custom\css\user-profiles-list-small.css" />
     <Content Include="Custom\js\custom.js" />
     <Content Include="Custom\js\custom.min.js" />
+    <Content Include="Custom\live_resource\css\live.css" />
+    <Content Include="Custom\live_resource\js\fccLiveUpdateBot.js" />
     <Content Include="Global.asax" />
     <Content Include="Images\favicon.ico" />
     <Content Include="Images\pic.jpg" />

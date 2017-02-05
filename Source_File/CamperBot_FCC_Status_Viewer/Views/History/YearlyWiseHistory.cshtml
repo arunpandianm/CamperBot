@@ -111,18 +111,55 @@
         @foreach (var item in Model)
                 {
                     @:date.push("@item.u_date");
-                                    @:point.push("@item.pts_count");
-                                    @:user_count.push("@item.u_count");
-                                }
+                    @:point.push("@item.pts_count");
+                    @:user_count.push("@item.u_count");
+                }
 
+        //start -- date generation -- yearly count -- points
         var formatted_date = [];
         for (var i = 0; i < date.length; i++) {
-            formatted_date[i] = date[i].slice(0, 9);
+            var date_obj1 = new Date(date[i]);
+            formatted_date[i] = date_obj1.getDate() + "/" + (date_obj1.getMonth() + 1) + "/" + date_obj1.getFullYear();
         }
+        //console.log(date);
+        //console.log(formatted_date);
+
+        var date_obj = new Date();
+        var graphDate = [];
+        var temp_year = 2016;
+        for (var i = 0; temp_year < date_obj.getFullYear() ; i++) {
+            graphDate.push("31/12/" + temp_year);
+            temp_year += 1;
+            }
+
+        //console.log(graphDate);
+
+        var graphPoints_userPoints = [];
+        var flag_first_entry = 1;
+        var temp_points = 0;
+        for (var i = 0; i < graphDate.length; i++) {
+            for (var j = 0; j < formatted_date.length; j++) {
+                if (graphDate[i] == formatted_date[j] && flag_first_entry == 1) {
+                    graphPoints_userPoints[i] = point[j];
+                    temp_points = point[j];
+                    flag_first_entry = 2;
+                }
+                if (graphDate[i] == formatted_date[j] && flag_first_entry == 2) {
+                    graphPoints_userPoints[i] = point[j];
+                    temp_points = point[j];
+                }
+                else if (flag_first_entry == 2) {
+                    graphPoints_userPoints[i] = temp_points;
+                }
+            }
+        }
+
+        //end -- date generation -- yearly count -- points
+
 
         //Create data and option object point
         var data_obj_point = {
-            labels: formatted_date,
+            labels: graphDate,
             datasets: [
             {
                 label: "Total Points",
@@ -133,7 +170,7 @@
                 pointHoverBackgroundColor: "#fff",
                 pointHoverBorderColor: "rgba(220,220,220,1)",
                 pointBorderWidth: 1,
-                data: point
+                data: graphPoints_userPoints
             }
             ]
         };
@@ -159,9 +196,33 @@
 
 
         //user count chart
+        //start -- date generation -- monthly count -- usercount
+        var graphPoints_userCount = [];
+        var flag_first_entry1 = 1;
+        var temp_user_count = 0;
+        for (var i = 0; i < graphDate.length; i++) {
+            for (var j = 0; j < formatted_date.length; j++) {
+                if (graphDate[i] == formatted_date[j] && flag_first_entry1 == 1) {
+                    graphPoints_userCount[i] = user_count[j];
+                    temp_points = user_count[j];
+                    flag_first_entry = 2;
+                }
+                if (graphDate[i] == formatted_date[j] && flag_first_entry1 == 2) {
+                    graphPoints_userCount[i] = user_count[j];
+                    temp_points = user_count[j];
+                }
+                else if (flag_first_entry == 2) {
+                    graphPoints_userCount[i] = temp_user_count;
+                }
+            }
+        }
+
+        //end -- date generation -- monthly count -- usercount
+
+
         //Create data and option object point
         var data_obj_user = {
-            labels: formatted_date,
+            labels: graphDate,
             datasets: [
             {
                 label: "Camper Count",
@@ -172,7 +233,7 @@
                 pointHoverBackgroundColor: "#fff",
                 pointHoverBorderColor: "rgba(220,220,220,1)",
                 pointBorderWidth: 1,
-                data: user_count
+                data: graphPoints_userCount
             }
             ]
         };

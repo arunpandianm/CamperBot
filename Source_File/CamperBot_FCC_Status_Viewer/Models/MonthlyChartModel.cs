@@ -21,7 +21,7 @@ namespace CamperBot_FCC_Status_Viewer.Models
                 connection.Open();
 
                 // Select Total points from daily count table
-                string sqlQuery = "SELECT u_date, pts_count, u_count FROM daily_count WHERE u_date LIKE '%-01' ";
+                string sqlQuery = "SELECT u_date, pts_count, u_count FROM daily_count";
                 MySqlCommand cmd = new MySqlCommand(sqlQuery, connection);
 
                 // Generate the list with fetched data
