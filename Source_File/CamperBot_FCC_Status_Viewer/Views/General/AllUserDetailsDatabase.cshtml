@@ -47,9 +47,10 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap bulk_action" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th><input type="checkbox" id="check-all" class="flat"></th>
                                 <th>S.No</th>
                                 <th>User ID</th>
                                 <th>User Name</th>
@@ -64,6 +65,7 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
+                                    <td><input type="checkbox" class="flat" name="table_records"></td>
                                     <td>@sno</td>
                                     <td>@item.uid</td>
                                     <td>@item.uname</td>
@@ -131,7 +133,7 @@
                       {
                           extend: "print",
                           className: "btn-sm"
-                      },
+                      }
                     ],
                     responsive: true
                 });
@@ -171,11 +173,21 @@
                   },
                 ],
                 responsive: true,
-                keys: true
+                keys: true,
+                order: [[1, 'asc']],
+                columnDefs: [
+                  { orderable: false, targets: [0] }
+                ]
+            });
+            $('#datatable-responsive').on('draw.dt', function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_flat-green',
+                    
+                });
             });
         }
 
-
+        /*
         var $datatable = $('#datatable-checkbox');
 
         $datatable.dataTable({
@@ -190,7 +202,10 @@
             });
         });
 
+        */
         TableManageButtons.init();
+
+
     });
 </script>
 <!-- /Datatables -->

@@ -138,7 +138,7 @@
                     break;
                 }
                 case 2: {
-                    if (date_obj.getFullYear % 4 == 0 || (date_obj.getFullYear % 400 != 0 && date_obj.getFullYear % 100 != 0)){
+                    if (((date_obj.getFullYear % 4 == 0) || (date_obj.getFullYear % 400 == 0)) && (date_obj.getFullYear % 100 != 0)){
                         graphDate.push(29 + "/" + temp + "/" + date_obj.getFullYear());
                     }          
                     else {

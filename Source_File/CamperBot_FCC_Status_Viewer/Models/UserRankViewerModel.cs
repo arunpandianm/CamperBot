@@ -21,7 +21,7 @@ namespace CamperBot_FCC_Status_Viewer.Models
                 connection.Open();
 
                 // Select user based on rank order
-                string sqlQuery = "SELECT user.uid, user.name, user.uname, user.url, daily_update.points, daily_update.rank FROM user, daily_update WHERE user.uid = daily_update.uid AND daily_update.r_date = '2016-10-12' order by daily_update.rank;";
+                string sqlQuery = "SELECT user.uid, user.name, user.uname, user.url, user_rank_list.points FROM user, user_rank_list WHERE user.uid = user_rank_list.uid order by user_rank_list.points DESC;";
                 MySqlCommand cmd = new MySqlCommand(sqlQuery, connection);
 
                 // Generate the list with fetched data
@@ -34,7 +34,7 @@ namespace CamperBot_FCC_Status_Viewer.Models
                         name = rdr["name"].ToString(),
                         uname = rdr["uname"].ToString(),
                         url = rdr["url"].ToString(),
-                        rank = rdr["rank"].ToString(),
+                        //rank = rdr["rank"].ToString(),
                         points = rdr["points"].ToString()
                     };
                     tempList.Add(temp_data);
@@ -56,7 +56,7 @@ namespace CamperBot_FCC_Status_Viewer.Models
         public string name { get; set; }
         public string uname { get; set; }
         public string url { get; set; }
-        public string rank { get; set; }
+        //public string rank { get; set; }
         public string points { get; set; }
     }
 }

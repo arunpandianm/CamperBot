@@ -1,6 +1,9 @@
 ﻿@model List<CamperBot_FCC_Status_Viewer.Models.rank_list>
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var rank = 0;
+    var temp_points = "";
+    var flag = 1;
 }
 <link rel="stylesheet" href="~/Custom/css/user-profiles-list-small.css">
 <!-- User rank viewer -->
@@ -54,23 +57,44 @@
                         </li>
                         -->
                         <!--/template-->
+
                         @foreach (var item in Model)
                         {
+                            if (@item.points != "0")
+                            {
+                                if (flag == 1)
+                                {
+                                    temp_points = @item.points;
+                                    flag = 2;
+                                    rank++;
+                                }
+                                else if (flag == 2)
+                                {
+
+                                    if (temp_points != @item.points)
+                                    {
+                                        temp_points = @item.points;
+                                        rank++;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                rank = 0;
+                            }     
                             <li>
                                 <div class="user-avatar">
-                                    <!--
-                                    <a href="FetchUserProfileDetails?userId="+ @item.uid>
-                                        -->
                                     <a href = "UserProfileViewer?userId=@item.uid">
                                         <img src="@item.url" width="48" alt="Profile Picture Or Avatar of Camper" />
                                     </a>
                                 </div>
                                 <p class="user-name">
                                     <a href="UserProfileViewer?userId=@item.uid">@item.name</a>
-                                    <span>Rank : #@item.rank | Point : @item.points</span>
+                                    <span>Rank : #@rank | Point : @item.points</span>
                                 </p>
                                 <a class="delete" href="UserProfileViewer?userId=@item.uid"><i class="fa fa-plus"></i></a>
                             </li>
+
                         }
                     </ul>
                     <!--/List the user based on rank-->

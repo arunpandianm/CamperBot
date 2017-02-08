@@ -125,6 +125,10 @@
     <Content Include="Images\profile.jpg" />
     <Content Include="Plugins\bootstrap-daterangepicker\daterangepicker.js" />
     <Content Include="Plugins\bootstrap-progressbar\bootstrap-progressbar.min.js" />
+    <Content Include="Plugins\bootstrap-sweetalert\css\sweet-alert.css" />
+    <Content Include="Plugins\bootstrap-sweetalert\js\sweet-alert.init.js" />
+    <Content Include="Plugins\bootstrap-sweetalert\js\sweet-alert.min.js" />
+    <Content Include="Plugins\bootstrap-sweetalert\css\custom-style-sweet-alert.css" />
     <Content Include="Plugins\bootstrap\dist\css\bootstrap.min.css" />
     <Content Include="Plugins\bootstrap\dist\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Plugins\bootstrap\dist\js\bootstrap.min.js" />
@@ -137,6 +141,7 @@
     <Content Include="Plugins\datatables.net\datatables.net-buttons\js\buttons.flash.min.js" />
     <Content Include="Plugins\datatables.net\datatables.net-buttons\js\buttons.html5.min.js" />
     <Content Include="Plugins\datatables.net\datatables.net-buttons\js\buttons.print.min.js" />
+    <Content Include="Plugins\datatables.net\datatables.net-buttons\js\dataTables.buttons.min.js" />
     <Content Include="Plugins\datatables.net\datatables.net-fixedheader-bs\fixedHeader.bootstrap.min.css" />
     <Content Include="Plugins\datatables.net\datatables.net-fixedheader\js\dataTables.fixedHeader.min.js" />
     <Content Include="Plugins\datatables.net\datatables.net-keytable\js\dataTables.keyTable.min.js" />

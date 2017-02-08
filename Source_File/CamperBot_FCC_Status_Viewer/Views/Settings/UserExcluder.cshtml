@@ -7,6 +7,8 @@
     int index_excluded_user = 1;
     int index_unexcluded_user = 1;
 }
+
+
 <!-- Datatables required css -->
 <link href="~/Plugins/datatables.net/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 <link href="~/Plugins/datatables.net/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
@@ -14,6 +16,11 @@
 <link href="~/Plugins/datatables.net/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
 <link href="~/Plugins/datatables.net/datatables.net-scroller-bs/scroller.bootstrap.min.css" rel="stylesheet">
 <!-- /Datatables required css -->
+
+<!--Bootstrap sweet alert-->
+<link href="~/Plugins/bootstrap-sweetalert/css/sweet-alert.css" rel="stylesheet">
+<!--custom style for sweet alert-->
+<link href="~/Plugins/bootstrap-sweetalert/css/custom-style-sweet-alert.css" rel="stylesheet" />
 
 <!-- User Excluder setting-->
 <div class="right_col" role="main">
@@ -204,6 +211,10 @@
     </div>
 </div>
 <!-- User Excluder setting-->
+<!--Bootstrap sweet alert-->
+<script src="~/Plugins/bootstrap-sweetalert/js/sweet-alert.min.js"></script>
+<!--Bootsrap sweet alert init-->
+<script src="~/Plugins/bootstrap-sweetalert/js/sweet-alert.init.js"></script>
 
 <!-- Datatables js-->
 <script src="~/Plugins/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -221,8 +232,10 @@
 <script src="~/Plugins/jszip/dist/jszip.min.js"></script>
 <script src="~/Plugins/pdfmake/build/pdfmake.min.js"></script>
 <script src="~/Plugins/pdfmake/build/vfs_fonts.js"></script>
-
 <!-- /Datatables js-->
+
+
+
 <script>
     $(document).ready(function () {
         var handleDataTableButtons = function () {
@@ -321,25 +334,3 @@
     });
 </script>
 <!-- /Datatables -->
-<!--get data from Form and sent to Model Script-->
-<!--Add to Exclusion list-->
-<script>
-    $(function () {
-        $('#addExclusion').click(function () {
-            var selectedName = $('#selectedunExcludedUser').val();
-            window.location.href = "AddUserExclusion?userName=" + selectedName;
-        });
-    });
-</script>
-<!--/Add to Exclusion list-->
-<!--Remove from Exclusion list-->
-<script>
-    $(function () {
-        $('#removeExclusion').click(function () {
-            var selectedName = $('#selectedExcludedUser').val();
-            window.location.href = "RemoveUserExclusion?userName=" + selectedName;
-        });
-    });
-</script>
-<!--/Remove from Exclusion list-->
-<!--/get data from Form and sent to Model Script-->

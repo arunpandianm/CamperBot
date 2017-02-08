@@ -162,9 +162,6 @@
                     graphDate.push(temp + "/" + (date_obj.getMonth() + 1) + "/" + date_obj.getFullYear());
                 }
 
-                //console.log(formatted_date);
-                //console.log(graphDate);
-
                 var graphPoints = [];
                 var flag_first_entry = 1;
                 var temp_points = 0;
@@ -192,7 +189,7 @@
                     labels: graphDate,
                     datasets: [
                     {
-                        label: "Current Month - Campers Total Points Status",
+                        label: "Total Points",
                         backgroundColor: "rgba(38, 185, 154, 0.31)",
                         borderColor: "rgba(38, 185, 154, 0.7)",
                         pointBorderColor: "rgba(38, 185, 154, 0.7)",
@@ -208,7 +205,7 @@
                 var option_obj = {
                     title: {
                         display: true,
-                        text: 'Total Points'
+                        text: 'Current Month - Campers Total Points Status'
                     },
                     legend: {
                         position: 'bottom'

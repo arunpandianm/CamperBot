@@ -1,0 +1,45 @@
+
+/* =========== */
+/* Sweet Alert */
+/* =========== */
+.sweet-alert h2 {
+  font-size: 24px;
+  position: relative;
+}
+.sweet-alert p {
+  font-size: 14px;
+  line-height: 22px;
+}
+.sweet-alert .icon.success .placeholder {
+  border: 4px solid rgba(16, 157, 243, 0.3);
+}
+.sweet-alert .icon.success .line {
+  background-color: #109df3;
+}
+.sweet-alert .icon.warning {
+  border-color: #f7b543;
+}
+.sweet-alert .icon.info {
+  border-color: #04a2b3;
+}
+.sweet-alert .btn-warning:focus,
+.sweet-alert .btn-info:focus,
+.sweet-alert .btn-success:focus,
+.sweet-alert .btn-danger:focus,
+.sweet-alert .btn-default:focus {
+  box-shadow: none;
+}
+.sweet-alert .btn-lg {
+  font-size: 15px !important;
+  padding: 6px 14px !important;
+}
+.sweet-alert .icon.error {
+  border-color: #f03154;
+}
+.sweet-alert .icon.error .line {
+  background-color: #f03154;
+}
+.sweet-alert .icon.warning .body,
+.sweet-alert .icon.warning .dot {
+  background-color: #f7b543;
+}
