@@ -40,3 +40,6 @@ E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\Ca
 E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\CamperBot_FCC_Status_Viewer\bin\MySql.Data.Entity.EF5.xml
 E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\CamperBot_FCC_Status_Viewer\bin\MySql.Data.Entity.EF6.xml
 E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\CamperBot_FCC_Status_Viewer\bin\MySql.Web.xml
+E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\CamperBot_FCC_Status_Viewer\bin\Octokit.dll
+E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\CamperBot_FCC_Status_Viewer\bin\Octokit.pdb
+E:\CamperBot Project Master\CamperBot_Source_File\CamperBot_FCC_Status_Viewer\CamperBot_FCC_Status_Viewer\bin\Octokit.xml
