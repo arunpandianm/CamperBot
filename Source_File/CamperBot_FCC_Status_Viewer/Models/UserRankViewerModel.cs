@@ -13,7 +13,7 @@ namespace CamperBot_FCC_Status_Viewer.Models
             List<rank_list> tempList = new List<rank_list>();
 
             // Database Connection
-            string connectionString = "server=localhost;user=root;database=mini;port=3306;password=;";
+            string connectionString = "server=localhost;user=root;database=camperbot;port=3306;password=;";
             MySqlConnection connection = new MySqlConnection(connectionString);
 
             try
@@ -34,7 +34,6 @@ namespace CamperBot_FCC_Status_Viewer.Models
                         name = rdr["name"].ToString(),
                         uname = rdr["uname"].ToString(),
                         url = rdr["url"].ToString(),
-                        //rank = rdr["rank"].ToString(),
                         points = rdr["points"].ToString()
                     };
                     tempList.Add(temp_data);
@@ -56,7 +55,6 @@ namespace CamperBot_FCC_Status_Viewer.Models
         public string name { get; set; }
         public string uname { get; set; }
         public string url { get; set; }
-        //public string rank { get; set; }
         public string points { get; set; }
     }
 }

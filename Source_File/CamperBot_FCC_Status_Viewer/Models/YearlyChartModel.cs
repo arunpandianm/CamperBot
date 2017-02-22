@@ -13,14 +13,14 @@ namespace CamperBot_FCC_Status_Viewer.Models
             List<yearly_update_list> monthlyUpdateList = new List<yearly_update_list>();
 
             // Database Connection
-            string connectionString = "server=localhost;user=root;database=mini;port=3306;password=;";
+            string connectionString = "server=localhost;user=root;database=camperbot;port=3306;password=;";
             MySqlConnection connection = new MySqlConnection(connectionString);
             try
             {
                 connection.Open();
 
                 // Select Total points from daily update table
-                string sqlQuery = "SELECT u_date, pts_count, u_count FROM daily_count WHERE u_date LIKE '%09-30' ";
+                string sqlQuery = "SELECT u_date, pts_count, u_count FROM daily_count WHERE u_date LIKE '%12-31' ";
                 MySqlCommand cmd = new MySqlCommand(sqlQuery, connection);
 
                 // Generate the list with fetched data

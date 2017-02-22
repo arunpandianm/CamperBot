@@ -14,7 +14,7 @@ namespace CamperBot_FCC_Status_Viewer.Models
             List<current_month_update_list> tempList = new List<current_month_update_list>();
 
             // Database Connection
-            string connectionString = "server=localhost;user=root;database=mini;port=3306;password=;";
+            string connectionString = "server=localhost;user=root;database=camperbot;port=3306;password=;";
             MySqlConnection connection = new MySqlConnection(connectionString);
 
             try
@@ -42,7 +42,7 @@ namespace CamperBot_FCC_Status_Viewer.Models
                 
                 //Find the Inactive user and append to same list
                 // Find count of Inactive user
-                string sqlQuery1 = "select count(*) as i_user from daily_update where points = '0' AND r_date = '2017-02-01'; ";
+                string sqlQuery1 = "SELECT COUNT(*) i_user FROM user_rank_list WHERE points = 0 ;";
                 MySqlCommand cmd1 = new MySqlCommand(sqlQuery1, connection);
 
                 // Generate the list with fetched data

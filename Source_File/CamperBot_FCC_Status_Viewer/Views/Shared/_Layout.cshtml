@@ -13,7 +13,7 @@
 
     <title>CamperBot-FCC Status Viewer</title>
 
-    <link rel="shortcut icon" href="~/Images/favicon.ico">
+    <link rel="shortcut icon" href="~/Images/logo_mini.jpg">
 
     <!-- Bootstrap -->
     <link href="~/Plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -24,7 +24,12 @@
     <!-- iCheck -->
     <link href="~/Plugins/iCheck/skins/flat/green.css" rel="stylesheet">
     <!-- Custom Theme Style -->
-    <link href="~/Custom/css/custom.min.css" rel="stylesheet">  
+    <link href="~/Custom/css/custom.min.css" rel="stylesheet">
+    <!--Bootstrap sweet alert-->
+    <link href="~/Plugins/bootstrap-sweetalert/css/sweet-alert.css" rel="stylesheet">
+    <!--custom style for sweet alert-->
+    <link href="~/Plugins/bootstrap-sweetalert/css/custom-style-sweet-alert.css" rel="stylesheet" />
+  
 
 </head>
 <body class="nav-md">
@@ -38,7 +43,7 @@
     <!-- FastClick -->
     <script src="~/Plugins/fastclick/fastclick.js"></script>
     <!-- NProgress -->
-    <script src="~/Plugins/nprogress/nprogress.js"></script>
+    <script src="~/Plugins/nprogress/js/nprogress.js"></script>
     <!-- iCheck -->
     <script src="~/Plugins/iCheck/icheck.min.js"></script>
     
@@ -48,18 +53,18 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="../About/FccStatusViewer" class="site_title"><i class="fa fa-trophy"></i> <span>CamperBot</span></a>
+                        <a id="about2" href="javascript:;" class="site_title"><i class="fa fa-trophy"></i> <span>CamperBot</span></a>
                     </div>
                     <div class="clearfix"></div>
 
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic">
-                            <img src="~/Images/profile.jpg" alt="profile picture" class="img-circle profile_img">
+                            <img src="@ViewBag.AvatarUrl" alt="profile picture" class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
-                            <h2>Arun</h2>
+                            <h2>@ViewBag.UserName</h2>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -95,6 +100,15 @@
                                     </ul>
                                 </li>
                                 <li>
+                                    <a><i class="fa fa-child"></i> Active Users <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="../ActiveUser/TodayActiveUser"><i class="fa fa-child"></i> Today </a></li>
+                                    </ul>
+                                    <ul class="nav child_menu">
+                                        <li><a href="../ActiveUser/YesterdayActiveUser"><i class="fa fa-child"></i> Yesterday </a></li>
+                                    </ul>
+                                </li>
+                                <li>
                                     <a><i class="fa fa-globe"></i> Live On <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="../LiveOn/LiveUpdate"><i class="fa fa-newspaper-o"></i> Live Update</a></li>
@@ -114,7 +128,7 @@
                                         <li><i class="fa fa-code"></i> @Html.ActionLink("Developer Team", "DeveloperTeam", "About")</li>
                                             -->
                                         <li><a href="../About/DeveloperTeam"><i class="fa fa-code"></i>Developer Team</a></li>
-                                        <li><a href="../About/FccStatusViewer"><i class="fa fa-info-circle"></i>FCC Status Viewer</a></li>
+                                        <li><a id="about" href="javascript:;"><i class="fa fa-info-circle"></i>FCC Status Viewer</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -123,16 +137,16 @@
                     <!-- /sidebar menu -->
                     <!-- /menu footer buttons -->
                     <div class="sidebar-footer hidden-small">
-                        <a data-toggle="tooltip" data-placement="top" title="Settings">
-                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        <a data-toggle="tooltip" href="../General/Dashboard" data-placement="top" title="Home">
+                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                         </a>
                         <a onclick="$(document).fullScreen(true)" data-toggle="tooltip" data-placement="top" title="FullScreen">
                             <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
                         </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Lock">
-                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        <a onclick="$(document).fullScreen(false)" data-toggle="tooltip" data-placement="top" title="NormalScreen">
+                            <span class="glyphicon glyphicon-resize-small" aria-hidden="true"></span>
                         </a>
-                        <a data-toggle="tooltip" href="login.html" data-placement="top" title="Logout">
+                        <a data-toggle="tooltip" href="../General/Logout" data-placement="top" title="Logout">
                             <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                         </a>
                     </div>
@@ -151,19 +165,12 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/Images/profile.jpg" alt="This is the Profile Picture">Arun
+                                    <img src="@ViewBag.AvatarUrl" alt="This is the Profile Picture">@ViewBag.UserName
                                     <span class="fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                    <li><a href="javascript:;"> Profile</a></li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="badge bg-red pull-right">50%</span>
-                                            <span>Settings</span>
-                                        </a>
-                                    </li>
-                                    <li><a href="javascript:;">Help</a></li>
-                                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                    <li><a id="help" href="javascript:;">Help</a></li>
+                                    <li><a id="logout" href="javascript:;"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -177,7 +184,7 @@
             <!-- footer content -->
             <footer>
                 <div class="pull-right">
-                    © @DateTime.Now.Year CamperBot-FCC Status Viewer <a href="https://www.kgisl.ac.in">KGiSL</a>
+                    © @DateTime.Now.Year Powered by <a href="https://www.kgisl.ac.in" target="_blank">KGiSL</a>
                 </div>
                 <div class="clearfix"></div>
             </footer>
@@ -186,8 +193,91 @@
         </div>
     </div>
 
+
+    <!--Bootstrap sweet alert-->
+    <script src="~/Plugins/bootstrap-sweetalert/js/sweet-alert.min.js"></script>
+    <!--Bootsrap sweet alert init-->
+    <script src="~/Plugins/bootstrap-sweetalert/js/sweet-alert.init.js"></script>
+    <!--jquery cookie plugin-->
+    <script src="~/Plugins/jquery.cookie/jquery.cookie.js"></script>
+
     <!-- Custom Theme Scripts -->
     <script src="~/Custom/js/custom.min.js"></script>
+    <script>
+        $('#logout').click(function () {
+            //window.location.href = "https://github.com/logout";
+            var realConfirm = window.confirm;
+            window.location.href = "https://github.com/logout";
+            window.confirm = function () {
+               
+                    window.confirm = realConfirm;
+                    return true;
+                };
+        });
+
+        $('#logout3').click(function () {
+            if (!window['deleteAllCookies'] && document['cookie']) {
+                window.deleteAllCookies = function (showLog) {
+                    var arrCookies = document.cookie.split(';'),
+                        arrPaths = location.pathname.replace(/^\//, '').split('/'), //  remove leading '/' and split any existing paths
+                        arrTemplate = ['expires=Thu, 01-Jan-1970 00:00:01 GMT', 'path={path}', 'domain=' + window.location.host, 'secure='];  //  array of cookie settings in order tested and found most useful in establishing a "delete"
+                    for (var i in arrCookies) {
+                        var strCookie = arrCookies[i];
+                        if (typeof strCookie == 'string' && strCookie.indexOf('=') >= 0) {
+                            var strName = strCookie.split('=')[0];  //  the cookie name
+                            for (var j = 1; j <= arrTemplate.length; j++) {
+                                if (document.cookie.indexOf(strName) < 0) break; // if this is true, then the cookie no longer exist
+                                else {
+                                    var strValue = strName + '=; ' + arrTemplate.slice(0, j).join('; ') + ';';  //  made using the temp array of settings, putting it together piece by piece as loop rolls on
+                                    if (j == 1) document.cookie = strValue;
+                                    else {
+                                        for (var k = 0; k <= arrPaths.length; k++) {
+                                            if (document.cookie.indexOf(strName) < 0) break; // if this is true, then the cookie no longer exist
+                                            else {
+                                                var strPath = arrPaths.slice(0, k).join('/') + '/'; //  builds path line 
+                                                strValue = strValue.replace('{path}', strPath);
+                                                document.cookie = strValue;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    showLog && window['console'] && console.info && console.info("\n\tCookies Have Been Deleted!\n\tdocument.cookie = \"" + document.cookie + "\"\n");
+                    return document.cookie;
+                }
+            }
+        });
+
+
+        /*
+        $('#logout').click(function () {
+            //alert("hello arun");
+            deleteAllCookies()
+            //for (var it in $.cookie()) $.removeCookie(it);
+            window.location.href = "../General/Authorize"; // TO REFRESH THE PAGE
+        });
+
+        
+        function deleteAllCookies() {
+            var cookies = document.cookie.split(";");
+            for (var i = 0; i < cookies.length; i++)
+                deleteCookie(cookies[i].split("=")[0]);
+        }
+
+        function setCookie(name, value, expirydays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (expirydays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = name + "=" + value + "; " + expires;
+        }
+
+        function deleteCookie(name) {
+            setCookie(name, "", -1);
+        }
+        */
+    </script>
 
 </body>
 </html>

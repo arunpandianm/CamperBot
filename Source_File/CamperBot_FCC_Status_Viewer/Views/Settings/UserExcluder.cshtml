@@ -17,11 +17,6 @@
 <link href="~/Plugins/datatables.net/datatables.net-scroller-bs/scroller.bootstrap.min.css" rel="stylesheet">
 <!-- /Datatables required css -->
 
-<!--Bootstrap sweet alert-->
-<link href="~/Plugins/bootstrap-sweetalert/css/sweet-alert.css" rel="stylesheet">
-<!--custom style for sweet alert-->
-<link href="~/Plugins/bootstrap-sweetalert/css/custom-style-sweet-alert.css" rel="stylesheet" />
-
 <!-- User Excluder setting-->
 <div class="right_col" role="main">
     <div class="">
@@ -37,20 +32,9 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>Excluded User List<small>campers</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
+                    <ul class="navbar-right panel_toolbox" style="list-style-type:none">
                         <li>
                             <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="#">Settings 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Settings 2</a>
-                                </li>
-                            </ul>
                         </li>
                     </ul>
                     <div class="clearfix"></div>
@@ -60,8 +44,8 @@
                         <thead>
                             <tr>
                                 <th>S.No</th>
-                                <th>User ID</th>
                                 <th>User Name</th>
+                                <th>User ID</th>
                                 <th>DOJ</th>
                                 <th>URL</th>
                                 <th>Excluder</th>
@@ -79,8 +63,8 @@
                                 {
                                     <tr>
                                         <td>@index_excluded_user</td>
-                                        <td>@item.uid</td>
                                         <td>@item.uname</td>
+                                        <td>@item.uid</td>
                                         <td>@item.doj</td>
                                         <td>@item.url</td>
                                         <td>@item.excluder</td>
@@ -126,20 +110,9 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>Unexcluded User List<small>campers</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
+                    <ul class="navbar-right panel_toolbox" style="list-style-type:none">
                         <li>
                             <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="#">Settings 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Settings 2</a>
-                                </li>
-                            </ul>
                         </li>
                     </ul>
                     <div class="clearfix"></div>
@@ -149,8 +122,8 @@
                         <thead>
                             <tr>
                                 <th>S.No</th>
-                                <th>User ID</th>
                                 <th>User Name</th>
+                                <th>User ID</th>
                                 <th>DOJ</th>
                                 <th>URL</th>
                                 <th>Excluder</th>
@@ -168,8 +141,8 @@
                                 {
                                     <tr>
                                         <td>@index_unexcluded_user</td>
-                                        <td>@item.uid</td>
                                         <td>@item.uname</td>
+                                        <td>@item.uid</td>
                                         <td>@item.doj</td>
                                         <td>@item.url</td>
                                         <td>@item.excluder</td>
@@ -211,10 +184,6 @@
     </div>
 </div>
 <!-- User Excluder setting-->
-<!--Bootstrap sweet alert-->
-<script src="~/Plugins/bootstrap-sweetalert/js/sweet-alert.min.js"></script>
-<!--Bootsrap sweet alert init-->
-<script src="~/Plugins/bootstrap-sweetalert/js/sweet-alert.init.js"></script>
 
 <!-- Datatables js-->
 <script src="~/Plugins/datatables.net/js/jquery.dataTables.min.js"></script>

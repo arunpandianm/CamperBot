@@ -1,0 +1,384 @@
+﻿@model List<CamperBot_FCC_Status_Viewer.Models.user_profile_details>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- User Profile Viewer -->
+<!-- Used to fetch and display details of particular user-->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>User Profile</h3>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Camper <small>Activity report</small></h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 profile_left">
+                                <div class="profile_img">
+                                    <div id="crop-avatar">
+                                        <!-- Current avatar -->
+                                        <img class="img-responsive avatar-view" src="@item.url" alt="Avatar" title="Change the avatar">
+                                    </div>
+                                </div>
+                                <h3>@item.uname</h3>
+                                <ul class="list-unstyled user_data">
+                                    <li>
+                                        <i class="fa fa-key user-profile-icon"></i> ID : @item.uid
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-calendar user-profile-icon"></i> Became Camper on @item.doj.ToString().Substring(0, 9)
+                                    </li>
+                                    <li class="m-top-xs">
+                                        <i class="fa fa-trophy user-profile-icon"></i>
+                                        <a href="http://www.freecodecamp.com/@item.uname.ToLower().Trim()" target="_blank">www.freecodecamp.com/@item.uname.ToLower().Trim()</a>
+                                    </li>
+                                    <li class="m-top-xs">
+                                        <i class="fa fa-github user-profile-icon"></i>
+                                        <a href="http://www.github.com/@item.uname.ToLower().Trim()" target="_blank">www.github.com/@item.uname.ToLower().Trim()</a>
+                                    </li>
+                                </ul>
+                                <a class="btn btn-success" id="backToTodayActiveUser"><i class="fa fa-chevron-left m-right-xs"></i> Back to Active User</a>
+                                <br />
+                            </div>
+                            break;
+                        }
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                            <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                    <li role="presentation" class="active">
+                                        <a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Current Month Activity</a>
+                                    </li>
+                                    <li role="presentation" class="">
+                                        <a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Monthlywise Activity</a>
+                                    </li>
+                                    <li role="presentation" class="">
+                                        <a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Yearlywise Activity</a>
+                                    </li>
+                                </ul>
+                                <div id="myTabContent" class="tab-content" style="width:100%; height:280px;">
+                                    <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+                                        <!-- start current_month_graph_bar activity -->
+                                        <canvas id="current_month_graph_bar"></canvas>
+                                        <!-- end current_month_graph_bar activity -->
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade active" id="tab_content2" aria-labelledby="profile-tab">
+                                        <!-- start monthly_graph_bar activity -->
+                                        <canvas id="monthly_graph_bar"></canvas>
+                                        <!-- end monthly_graph_bar activity -->
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade active" id="tab_content3" aria-labelledby="profile-tab">
+                                        <!-- start yearly_graph_bar activity -->
+                                        <canvas id="yearly_graph_bar"></canvas>
+                                        <!-- end yearly_graph_bar activity -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /User Profile Viewer -->
+<!-- Chart.js -->
+<script src="~/Plugins/Chart.js/Chart.min.js"></script>
+
+<!-- jQuery Sparklines -->
+<script src="~/Plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
+
+<!-- Flot -->
+<script src="~/Plugins/Flot/jquery.flot.js"></script>
+<script src="~/Plugins/Flot/jquery.flot.pie.js"></script>
+<script src="~/Plugins/Flot/jquery.flot.time.js"></script>
+<script src="~/Plugins/Flot/jquery.flot.stack.js"></script>
+<script src="~/Plugins/Flot/jquery.flot.resize.js"></script>
+
+<!-- Flot plugins -->
+<script src="~/Plugins/flot.orderbars/jquery.flot.orderBars.js"></script>
+<script src="~/Plugins/flot-spline/jquery.flot.spline.min.js"></script>
+<script src="~/Plugins/flot.curvedlines/curvedLines.js"></script>
+
+<!-- DateJS -->
+<script src="~/Plugins/DateJS/date.js"></script>
+
+<script>
+    //start -- common for all three graph
+    var date = [];
+    var point = [];
+    var formatted_date = [];
+
+    @foreach (var item in Model)
+    {
+        @:date.push("@item.r_date");
+        @:point.push("@item.points");
+    }
+   
+    for (var i = 0; i < date.length; i++) {
+        var date_obj = new Date(date[i]);
+        formatted_date[i] = date_obj.getDate() + "/" + (date_obj.getMonth() + 1) + "/" + date_obj.getFullYear();
+    }
+    //end -- common for all three graph
+
+
+    //start -- current_month_graph_line
+    //start -- current_month_graph date generation
+    var date_obj1 = new Date();
+    var graphDate1 = [];
+    for (var i = 0; i < date_obj1.getDate(); i++) {
+        var temp = i + 1;
+        graphDate1.push(temp + "/" + (date_obj1.getMonth() + 1) + "/" + date_obj1.getFullYear());
+    }
+
+    var graphPoints1 = [];
+    var flag_first_entry1 = 1;
+    var temp_points1 = 0;
+    for (var i = 0; i < graphDate1.length; i++) {
+        for (var j = 0; j < formatted_date.length; j++) {
+            if (graphDate1[i] == formatted_date[j] && flag_first_entry1 == 1) {
+                graphPoints1[i] = point[j];
+                temp_points1 = point[j];
+                flag_first_entry1 = 2;
+            }
+            if (graphDate1[i] == formatted_date[j] && flag_first_entry1 == 2) {
+                graphPoints1[i] = point[j];
+                temp_points1 = point[j];
+            }
+            else if (flag_first_entry1 == 2) {
+                graphPoints1[i] = temp_points1;
+            }
+        }
+    }
+    //end -- current_month_graph date generation
+
+    $(function () {
+        //Create data and option object
+        var data_obj1 = {
+            labels: graphDate1,
+            datasets: [
+            {
+                label: "Total Points",
+                backgroundColor: "rgba(38, 185, 154, 0.31)",
+                borderColor: "rgba(38, 185, 154, 0.7)",
+                pointBorderColor: "rgba(38, 185, 154, 0.7)",
+                pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointBorderWidth: 1,
+                data: graphPoints1
+            }
+            ]
+        };
+
+        var option_obj1 = {
+            title: {
+                display: true,
+                text: 'Current Month - Campers Points Status'
+            },
+            legend: {
+                position: 'bottom'
+            }
+        };
+
+        //Get the reference to canvas in html document
+        var ChartId1 = $("#current_month_graph_bar");
+
+        //Create the chart
+        var lineChart1 = new Chart(ChartId1, {
+            type: "line",
+            data: data_obj1,
+            options: option_obj1
+        });
+    });
+
+    //end -- current_month_graph_line
+
+
+    //start -- monthly_graph_line 
+    //start -- monthly_graph date generation
+    var date_obj2 = new Date();
+    var graphDate2 = [];
+    var month_end;
+    for (var i = 0; i < (date_obj2.getMonth()) ; i++) {
+        var temp = i + 1;
+        if(temp == 1 || temp == 3 || temp == 5 || temp == 7 || temp == 8 || temp == 10 || temp == 12){
+            month_end = 31;
+        }
+        else if (temp == 2) {
+            var temp_year = date_obj2.getFullYear();
+            if( ((temp_year % 4 == 0) || (temp_year % 400 == 0)) && (temp_year % 100 != 0)){
+                month_end = 29;
+            }
+            else{
+                month_end = 28;
+            }
+        }
+        else {
+            month_end = 30;
+        }
+        graphDate2.push(month_end + "/" + temp + "/" + date_obj2.getFullYear());
+    }
+
+    var graphPoints2 = [];
+    var flag_first_entry2 = 1;
+    var temp_points2 = 0;
+    for (var i = 0; i < graphDate2.length; i++) {
+        for (var j = 0; j < formatted_date.length; j++) {
+            if (graphDate2[i] == formatted_date[j] && flag_first_entry2 == 1) {
+                graphPoints2[i] = point[j];
+                temp_points2 = point[j];
+                flag_first_entry2 = 2;
+            }
+            if (graphDate2[i] == formatted_date[j] && flag_first_entry2 == 2) {
+                graphPoints2[i] = point[j];
+                temp_points2 = point[j];
+            }
+            else if (flag_first_entry2 == 2) {
+                graphPoints2[i] = temp_points2;
+            }
+        }
+    }
+    //end -- monthly_graph date generation
+
+    $(function () {
+        //Create data and option object
+        var data_obj2 = {
+            labels: graphDate2,
+            datasets: [
+            {
+                label: "Total Points",
+                backgroundColor: "rgba(38, 185, 154, 0.31)",
+                borderColor: "rgba(38, 185, 154, 0.7)",
+                pointBorderColor: "rgba(38, 185, 154, 0.7)",
+                pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointBorderWidth: 1,
+                data: graphPoints2
+            }
+            ]
+        };
+
+        var option_obj2 = {
+            title: {
+                display: true,
+                text: 'Monthly - Campers Points Status'
+            },
+            legend: {
+                position: 'bottom'
+            }
+        };
+
+        //Get the reference to canvas in html document
+        var ChartId2 = $("#monthly_graph_bar");
+
+        //Create the chart
+        var lineChart2 = new Chart(ChartId2, {
+            type: "line",
+            data: data_obj2,
+            options: option_obj2
+        });
+    });
+
+    //end -- monthly_graph_line
+
+    //start -- yearly_graph_line
+    //start -- date generation
+    var date_obj3 = new Date();
+    var graphDate3 = [];
+    for (var i = 2016; i < date_obj3.getFullYear() ; i++) {
+        graphDate3.push("31/12/" + i);
+    }
+
+    var graphPoints3 = [];
+    var flag_first_entry3 = 1;
+    var temp_points3 = 0;
+    for (var i = 0; i < graphDate3.length; i++) {
+        for (var j = 0; j < formatted_date.length; j++) {
+            if (graphDate3[i] == formatted_date[j] && flag_first_entry3 == 1) {
+                graphPoints3[i] = point[j];
+                temp_points3 = point[j];
+                flag_first_entry3 = 2;
+            }
+            if (graphDate3[i] == formatted_date[j] && flag_first_entry3 == 2) {
+                graphPoints3[i] = point[j];
+                temp_points3 = point[j];
+            }
+            else if (flag_first_entry3 == 2) {
+                graphPoints3[i] = temp_points3;
+            }
+        }
+
+    }
+    //end -- date generation
+
+    $(function () {
+        //Create data and option object
+        var data_obj3 = {
+            labels: graphDate3,
+            datasets: [
+            {
+                label: "Total Points",
+                backgroundColor: "rgba(38, 185, 154, 0.31)",
+                borderColor: "rgba(38, 185, 154, 0.7)",
+                pointBorderColor: "rgba(38, 185, 154, 0.7)",
+                pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointBorderWidth: 1,
+                data: graphPoints3
+            }
+            ]
+        };
+
+        var option_obj3 = {
+            title: {
+                display: true,
+                text: 'Yealy - Campers Points Status'
+            },
+            legend: {
+                position: 'bottom'
+            }
+        };
+
+        //Get the reference to canvas in html document
+        var ChartId3 = $("#yearly_graph_bar");
+
+        //Create the chart
+        var lineChart3 = new Chart(ChartId3, {
+            type: "line",
+            data: data_obj3,
+            options: option_obj3
+        });
+    });
+
+    //end -- yearly_graph_line
+
+</script>
+
+<script>
+    $(function () {
+        $('#backToTodayActiveUser').click(function () {
+            window.location.href = "TodayActiveUser";
+        });
+    });
+</script>
+
+<!-- morris.js -->
+<script src="~/Plugins/raphael/raphael.min.js"></script>
+<script src="~/Plugins/morris.js/morris.min.js"></script>
+<!-- bootstrap-progressbar -->
+<script src="~/Plugins/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<!-- bootstrap-daterangepicker -->
+<script src="~/Plugins/moment/moment.min.js"></script>

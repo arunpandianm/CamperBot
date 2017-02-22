@@ -13,7 +13,7 @@ namespace CamperBot_FCC_Status_Viewer.Models
             List<user_profile_details> tempList = new List<user_profile_details>();
 
             // Database Connection
-            string connectionString = "server=localhost;user=root;database=mini;port=3306;password=;";
+            string connectionString = "server=localhost;user=root;database=camperbot;port=3306;password=;";
             MySqlConnection connection = new MySqlConnection(connectionString);
 
             try

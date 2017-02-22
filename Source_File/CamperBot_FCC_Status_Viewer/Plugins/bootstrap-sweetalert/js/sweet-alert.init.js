@@ -26,7 +26,7 @@
                     swal("Cancelled", "User is not removed from Exclusion list", "error");
                 }   
             })
-            }),
+        }),
         e("#addExclusion").on("click", function () {
             swal({
                 title: "Are you sure?",
@@ -50,6 +50,23 @@
                 else {
                     swal("Cancelled", "User is not added to Exclusion list", "error");
                 }   
+            })
+        }),
+        e("#help").on("click", function () {
+            swal("HelpLine", "For feedback, contact: 1273158555 mail: demo@mail.com")
+        }),
+        e("#about").on("click",function(){
+            swal({
+                title:"Camperbot version 3.0",
+                text:"camperbot",
+                imageUrl: "../Images/logo_large.jpg"
+            })
+        }),
+        e("#about2").on("click", function () {
+            swal({
+                title: "Camperbot version 3.0",
+                text: "camperbot",
+                imageUrl: "../Images/logo_large.jpg"
             })
         })
     }, e.SweetAlert = new t, e.SweetAlert.Constructor = t
