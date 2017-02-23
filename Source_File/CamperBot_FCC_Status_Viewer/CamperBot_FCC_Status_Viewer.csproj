@@ -377,6 +377,7 @@
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
     <Content Include="Views\ActiveUser\TodayActiveUser.cshtml" />
     <Content Include="Views\ActiveUser\UserProfileViewer.cshtml" />
+    <Content Include="Views\ActiveUser\MonthActiveUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

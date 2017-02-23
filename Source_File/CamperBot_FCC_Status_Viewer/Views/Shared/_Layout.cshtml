@@ -103,9 +103,7 @@
                                     <a><i class="fa fa-child"></i> Active Users <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="../ActiveUser/TodayActiveUser"><i class="fa fa-child"></i> Today </a></li>
-                                    </ul>
-                                    <ul class="nav child_menu">
-                                        <li><a href="../ActiveUser/YesterdayActiveUser"><i class="fa fa-child"></i> Yesterday </a></li>
+                                        <li><a href="../ActiveUser/MonthActiveUser"><i class="fa fa-child"></i> This Month </a></li>
                                     </ul>
                                 </li>
                                 <li>
@@ -146,7 +144,7 @@
                         <a onclick="$(document).fullScreen(false)" data-toggle="tooltip" data-placement="top" title="NormalScreen">
                             <span class="glyphicon glyphicon-resize-small" aria-hidden="true"></span>
                         </a>
-                        <a data-toggle="tooltip" href="../General/Logout" data-placement="top" title="Logout">
+                        <a data-toggle="tooltip" href="https://github.com/logout" data-placement="top" title="Logout">
                             <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                         </a>
                     </div>
@@ -170,7 +168,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
                                     <li><a id="help" href="javascript:;">Help</a></li>
-                                    <li><a id="logout" href="javascript:;"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                    <li><a href="https://github.com/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -198,87 +196,9 @@
     <script src="~/Plugins/bootstrap-sweetalert/js/sweet-alert.min.js"></script>
     <!--Bootsrap sweet alert init-->
     <script src="~/Plugins/bootstrap-sweetalert/js/sweet-alert.init.js"></script>
-    <!--jquery cookie plugin-->
-    <script src="~/Plugins/jquery.cookie/jquery.cookie.js"></script>
-
     <!-- Custom Theme Scripts -->
     <script src="~/Custom/js/custom.min.js"></script>
-    <script>
-        $('#logout').click(function () {
-            //window.location.href = "https://github.com/logout";
-            var realConfirm = window.confirm;
-            window.location.href = "https://github.com/logout";
-            window.confirm = function () {
-               
-                    window.confirm = realConfirm;
-                    return true;
-                };
-        });
-
-        $('#logout3').click(function () {
-            if (!window['deleteAllCookies'] && document['cookie']) {
-                window.deleteAllCookies = function (showLog) {
-                    var arrCookies = document.cookie.split(';'),
-                        arrPaths = location.pathname.replace(/^\//, '').split('/'), //  remove leading '/' and split any existing paths
-                        arrTemplate = ['expires=Thu, 01-Jan-1970 00:00:01 GMT', 'path={path}', 'domain=' + window.location.host, 'secure='];  //  array of cookie settings in order tested and found most useful in establishing a "delete"
-                    for (var i in arrCookies) {
-                        var strCookie = arrCookies[i];
-                        if (typeof strCookie == 'string' && strCookie.indexOf('=') >= 0) {
-                            var strName = strCookie.split('=')[0];  //  the cookie name
-                            for (var j = 1; j <= arrTemplate.length; j++) {
-                                if (document.cookie.indexOf(strName) < 0) break; // if this is true, then the cookie no longer exist
-                                else {
-                                    var strValue = strName + '=; ' + arrTemplate.slice(0, j).join('; ') + ';';  //  made using the temp array of settings, putting it together piece by piece as loop rolls on
-                                    if (j == 1) document.cookie = strValue;
-                                    else {
-                                        for (var k = 0; k <= arrPaths.length; k++) {
-                                            if (document.cookie.indexOf(strName) < 0) break; // if this is true, then the cookie no longer exist
-                                            else {
-                                                var strPath = arrPaths.slice(0, k).join('/') + '/'; //  builds path line 
-                                                strValue = strValue.replace('{path}', strPath);
-                                                document.cookie = strValue;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    showLog && window['console'] && console.info && console.info("\n\tCookies Have Been Deleted!\n\tdocument.cookie = \"" + document.cookie + "\"\n");
-                    return document.cookie;
-                }
-            }
-        });
-
-
-        /*
-        $('#logout').click(function () {
-            //alert("hello arun");
-            deleteAllCookies()
-            //for (var it in $.cookie()) $.removeCookie(it);
-            window.location.href = "../General/Authorize"; // TO REFRESH THE PAGE
-        });
-
-        
-        function deleteAllCookies() {
-            var cookies = document.cookie.split(";");
-            for (var i = 0; i < cookies.length; i++)
-                deleteCookie(cookies[i].split("=")[0]);
-        }
-
-        function setCookie(name, value, expirydays) {
-            var d = new Date();
-            d.setTime(d.getTime() + (expirydays * 24 * 60 * 60 * 1000));
-            var expires = "expires=" + d.toUTCString();
-            document.cookie = name + "=" + value + "; " + expires;
-        }
-
-        function deleteCookie(name) {
-            setCookie(name, "", -1);
-        }
-        */
-    </script>
-
+    
 </body>
 </html>
 

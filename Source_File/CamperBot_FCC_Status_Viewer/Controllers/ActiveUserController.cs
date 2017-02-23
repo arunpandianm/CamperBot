@@ -31,8 +31,39 @@ namespace CamperBot_FCC_Status_Viewer.Controllers
                 ViewBag.AvatarUrl = user.AvatarUrl;
                 ViewBag.UserName = user.Name;
 
-                List<Models.active_user_list> TodayActiveUserList = CamperBot_FCC_Status_Viewer.Models.ActiveUserModel.GenerateActiveUserList();
+                List<Models.active_user_list> TodayActiveUserList = CamperBot_FCC_Status_Viewer.Models.ActiveUserModel.GenerateActiveUserList_today();
                 return View(TodayActiveUserList);
+            }
+            catch (AuthorizationException)
+            {
+                // Either the accessToken is null or it's invalid. This redirects
+                // to the GitHub OAuth login page. That page will redirect back to the
+                // Authorize action.
+                return Redirect(GetOauthLoginUrl());
+            }
+        }
+
+
+
+        // GET: ActiveUser/MonthActiveUser
+        public async Task<ActionResult> MonthActiveUser()
+        {
+            var accessToken = Session["OAuthToken"] as string;
+            if (accessToken != null)
+            {
+                // This allows the client to make requests to the GitHub API on the user's behalf
+                // without ever having the user's OAuth credentials.
+                client.Credentials = new Credentials(accessToken);
+            }
+
+            try
+            {
+                var user = await client.User.Current();
+                ViewBag.AvatarUrl = user.AvatarUrl;
+                ViewBag.UserName = user.Name;
+
+                List<Models.active_user_list1> MonthActiveUserList = CamperBot_FCC_Status_Viewer.Models.ActiveUserModel.GenerateActiveUserList_month();
+                return View(MonthActiveUserList);
             }
             catch (AuthorizationException)
             {

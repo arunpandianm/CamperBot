@@ -1,4 +1,4 @@
-﻿@model List<CamperBot_FCC_Status_Viewer.Models.active_user_list>
+﻿@model List<CamperBot_FCC_Status_Viewer.Models.active_user_list1>
 
 <link rel="stylesheet" href="~/Custom/css/user-profiles-list-small.css">
 <!-- Today Active User -->
@@ -6,7 +6,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Today Active User</h3>
+                <h3>Monthly Active User</h3>
             </div>
         </div>
         <div class="clearfix"></div>
@@ -47,11 +47,11 @@
                                 </div>
                                 <p class="user-name">
                                     <a href="UserProfileViewer?userId=@item.uid">@item.name</a>
-                                    <span> Point : @item.points</span>
+                                    
                                 </p>
                                 <a class="delete" href="UserProfileViewer?userId=@item.uid"><i class="fa fa-plus"></i></a>
                             </li>
-
+                       
                         }
                     </ul>
                     <!--/List the user based on rank-->
@@ -61,3 +61,4 @@
     </div>
 </div>
 <!-- /Today Active User -->
+
