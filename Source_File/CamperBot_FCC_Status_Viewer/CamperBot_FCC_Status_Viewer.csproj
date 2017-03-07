@@ -230,8 +230,12 @@
     <Content Include="Custom\live_resource\css\live.css" />
     <Content Include="Custom\live_resource\js\fccLiveUpdateBot.js" />
     <Content Include="Global.asax" />
+    <Content Include="Images\arun_pic.jpg" />
+    <Content Include="Images\bhargav_pic.jpg" />
+    <Content Include="Images\indhu_pic.png" />
     <Content Include="Images\logo_large.jpg" />
     <Content Include="Images\logo_mini.jpg" />
+    <Content Include="Images\madhan_pic.JPG" />
     <Content Include="Images\pic.jpg" />
     <Content Include="Images\profile.jpg" />
     <Content Include="Plugins\bootstrap-daterangepicker\daterangepicker.js" />

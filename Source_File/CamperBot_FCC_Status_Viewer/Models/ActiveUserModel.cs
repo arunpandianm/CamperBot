@@ -62,8 +62,10 @@ namespace CamperBot_FCC_Status_Viewer.Models
 
                 // Select user based on rank order
                 string current_month = DateTime.Now.Year.ToString() + "-" + DateTime.Now.ToString("MM") + "-%";
+                string first_day_month = DateTime.Now.Year.ToString() + "-" + DateTime.Now.ToString("MM") + "-01";
+                
                 //string sqlQuery = "SELECT distinct(user.uid), user.name, user.uname, user.url FROM user, daily_update WHERE user.uid = daily_update.uid AND(daily_update.r_date like '" + current_month + "' AND daily_update.points != 0);";
-                string sqlQuery = String.Format("SELECT distinct(user.uid), user.name, user.uname, user.url FROM user, daily_update WHERE user.uid = daily_update.uid AND (daily_update.r_date like '{0}' AND daily_update.points != 0);", current_month);
+                string sqlQuery = String.Format("SELECT distinct(user.uid), user.name, user.uname, user.url FROM user, daily_update WHERE user.uid = daily_update.uid AND (daily_update.r_date like '{0}' AND daily_update.points != 0 AND daily_update.r_date != '{1}');", current_month, first_day_month);
                 MySqlCommand cmd = new MySqlCommand(sqlQuery, connection);
 
                 // Generate the list with fetched data

@@ -53,19 +53,19 @@
             })
         }),
         e("#help").on("click", function () {
-            swal("HelpLine", "For feedback, contact: 1273158555 mail: demo@mail.com")
+            swal("HelpLine", "For feedback, contact: camperbot@kgisl.com")
         }),
         e("#about").on("click",function(){
             swal({
                 title:"Camperbot version 3.0",
-                text:"camperbot",
+                text: "Source Code : https://github.com/arunpandianm/CamperBot",
                 imageUrl: "../Images/logo_large.jpg"
             })
         }),
         e("#about2").on("click", function () {
             swal({
                 title: "Camperbot version 3.0",
-                text: "camperbot",
+                text: "Source Code : https://github.com/arunpandianm/CamperBot",
                 imageUrl: "../Images/logo_large.jpg"
             })
         })
